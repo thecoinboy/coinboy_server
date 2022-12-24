@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer'
 import bodyParser from 'body-parser';
+import cors from 'cors'
 export const app = express();
 const router = express.Router();
 dotenv.config({ path: "./config/config.env" })
