@@ -1,9 +1,17 @@
 import express from 'express'
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer'
+import bodyParser from 'body-parser';
 export const app = express();
 const router = express.Router();
 dotenv.config({ path: "./config/config.env" })
+
+
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
+
+app.use(express.json())
+app.use(cors())
 
 
 router.get("/check", (req, res) =>{
@@ -12,7 +20,6 @@ router.get("/check", (req, res) =>{
 
 router.post("/contact", (req, res) => {
     const { name, email, subject, message } = req.body
-
     const transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
@@ -33,9 +40,9 @@ router.post("/contact", (req, res) => {
     } else {
         transporter.sendMail(mailOption, ((err) => {
             if (err) {
-                res.status(500).send({ err: err })
+                res.status(500).json({ err: err })
             } else {
-                res.status(200).send({ message: "Message sent successfully" })
+                res.status(200).json({ message: "Message sent successfully" })
             }
         }))
     }
@@ -44,7 +51,6 @@ router.post("/contact", (req, res) => {
 
 export default router;
 
-// netmptzvhusoyksb   pass
-
+// netmptzvhusoyksb  pass;
 
 
